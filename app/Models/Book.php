@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Author extends Model
+class Book extends Model
 {
     use HasFactory;
 
-    protected $table = 'authors';
+    protected $table = 'books';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'publication_year'];
 
-    public function books()
+    public function authors()
     {
         return $this->hasManyThrough(
-            Book::class,
+            Author::class,
             BookAuthor::class,
             'book_id', // Foreign key on the environments table...
-            'author_id', // Foreign key on the deployments table...
+            'id', // Foreign key on the deployments table...
             'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
+            'author_id' // Local key on the environments table...
         );
     }
 }
